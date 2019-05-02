@@ -1,7 +1,13 @@
 {
     "name": "jandc/grumphp-yarn-task",
     "description": "Simple grumphp task akin to the 'npm scripts' task, but runs yarn instead.",
-
+    "license": "ISC",
+    "authors": [
+        {
+            "name": "Jan Decavele",
+            "email": "jandecavele@gmail.com"
+        }
+    ],
     "require": {
         "php": "^7.2",
         "phpro/grumphp": "^0.15.0"
