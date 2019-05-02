@@ -21,14 +21,18 @@ class YarnTask extends AbstractExternalTask
     public function getConfigurableOptions(): OptionsResolver
     {
         $resolver = new OptionsResolver();
-        $resolver->setDefaults([
-            'script' => null,
-            'triggered_by' => ['js', 'jsx', 'coffee', 'ts', 'less', 'sass', 'scss'],
-            'working_directory' => './',
-            'is_run_task' => false,
-        ]);
+        $resolver->setDefaults(
+            [
+                'script' => null,
+                'triggered_by' => ['js', 'jsx', 'coffee', 'ts', 'less', 'sass', 'scss'],
+                'working_directory' => './',
+                'is_run_task' => false,
+                'options' => '',
+            ]
+        );
 
         $resolver->addAllowedTypes('script', ['string']);
+        $resolver->addAllowedTypes('options', ['string']);
         $resolver->addAllowedTypes('triggered_by', ['array']);
         $resolver->addAllowedTypes('working_directory', ['string']);
         $resolver->addAllowedTypes('is_run_task', ['bool']);
@@ -58,10 +62,12 @@ class YarnTask extends AbstractExternalTask
         $arguments = $this->processBuilder->createArgumentsForCommand('yarn');
         $arguments->addOptionalArgument('run', $config['is_run_task']);
         $arguments->addRequiredArgument('%s', $config['script']);
+        $arguments->addOptionalArgument('%s', $config['options']);
 
         $process = $this->processBuilder->buildProcess($arguments);
         $process->setWorkingDirectory(realpath($config['working_directory']));
-        $process->run();
+
+        $status = $process->run();
 
         if (!$process->isSuccessful()) {
             return TaskResult::createFailed($this, $context, $this->formatter->format($process));
