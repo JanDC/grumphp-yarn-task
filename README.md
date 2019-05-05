@@ -2,7 +2,10 @@
 Simple grumphp task akin to the 'npm_script' task, but runs yarn instead
 
 ## Usage
+### Dependencies
+yarn (obviously), has to be installed and available in $PATH. <br> Refer to https://yarnpkg.com/en/docs/install for the installation procedures.
 ### Installation
+
 To install the yarn task simply run <br>
 `composer require jandc/grumphp-yarn-task` <br>
 or <br>
